@@ -1,3 +1,4 @@
+import 'package:advanceweatherapp/gen/assets.gen.dart';
 import 'package:advanceweatherapp/presentation/home_index.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,11 +11,39 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(),
-      body: const Center(
-        child: Text("Get ready for Advance weather app :)"),
-      ),
-    );
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: Stack(
+          fit: StackFit.loose,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: Assets.images.homeBackground.provider(),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Column(children: [
+              Container(
+                height: size.height * 0.3,
+              ),
+              Container(
+                height: size.height * 0.4,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: Assets.images.house.provider(),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ])
+          ],
+        ));
   }
 }
