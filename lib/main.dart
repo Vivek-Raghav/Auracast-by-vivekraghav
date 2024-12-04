@@ -1,4 +1,5 @@
 import 'package:advanceweatherapp/presentation/home_index.dart';
+import 'package:advanceweatherapp/presentation/pages/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Weather India',
       theme: lightTheme(context),
-      home: const HomeScreen(),
+      home: const HomePage(),
     );
   }
 }
