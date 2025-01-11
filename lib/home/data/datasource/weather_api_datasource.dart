@@ -1,4 +1,4 @@
-import 'package:advanceweatherapp/data/models/weather_api_response.dart';
+import 'package:advanceweatherapp/home/models/weather_api_response.dart';
 
 abstract class WeatherApiDatasource {
   Future<WeatherApiResponse> getWeatherData(String params);

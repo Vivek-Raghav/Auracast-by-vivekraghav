@@ -1,7 +1,7 @@
 import 'package:advanceweatherapp/core/const.dart';
 import 'package:advanceweatherapp/core/error/server_exception.dart';
-import 'package:advanceweatherapp/data/datasource/weather_api_datasource.dart';
-import 'package:advanceweatherapp/data/models/weather_api_response.dart';
+import 'package:advanceweatherapp/home/data/datasource/weather_api_datasource.dart';
+import 'package:advanceweatherapp/home/models/weather_api_response.dart';
 import 'package:dio/dio.dart';
 
 class WeatherApiDatasourceImpl implements WeatherApiDatasource {

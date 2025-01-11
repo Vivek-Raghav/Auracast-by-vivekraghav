@@ -1,10 +1,4 @@
-import 'package:advanceweatherapp/blocs/blocubit/home_screen_bloc.dart';
-import 'package:advanceweatherapp/blocs/event/home_screen_event.dart';
-import 'package:advanceweatherapp/blocs/state/home_screen_state.dart';
-import 'package:advanceweatherapp/data/models/weather_api_response.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:advanceweatherapp/gen/assets.gen.dart';
+import 'package:advanceweatherapp/home/home_index.dart';
 
 // BlocProvider creation with correct event dispatching
 class HomeScreen extends StatefulWidget {
@@ -20,13 +14,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    if (weatherApiResponse == null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        BlocProvider.of<HomeScreenBloc>(context)
-            .add(FetchWeather(params: cityName));
-      });
-    }
     super.initState();
+    BlocProvider.of<HomeScreenBloc>(context)
+        .add(FetchWeather(params: cityName));
   }
 
   @override
@@ -43,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return const Center(child: CircularProgressIndicator());
           } else if (state is WeatherLoaded) {
             weatherApiResponse = state.weatherApiResponse;
-            print(state.weatherApiResponse);
+            print("Weather of $cityName is => ${state.weatherApiResponse}");
           } else if (state is WeatherError) {
             return Center(child: Text('Error: ${state.message}'));
           }

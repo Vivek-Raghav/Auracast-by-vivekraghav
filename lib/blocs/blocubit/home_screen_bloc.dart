@@ -1,7 +1,7 @@
 import 'package:advanceweatherapp/blocs/event/home_screen_event.dart';
 import 'package:advanceweatherapp/blocs/state/home_screen_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:advanceweatherapp/data/domain/usecase/weather_api_uc.dart';
+import 'package:advanceweatherapp/home/domain/usecase/weather_api_uc.dart';
 
 class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   final WeatherApiResponseUc weatherApiUC;

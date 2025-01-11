@@ -1,4 +1,4 @@
-import 'package:advanceweatherapp/presentation/home_index.dart';
+import 'package:advanceweatherapp/home/home_index.dart';
 
 class ThemeColors {
   static const Color clrTransparent = Color(0x00ffffff);
