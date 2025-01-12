@@ -1,6 +1,4 @@
-import 'package:advanceweatherapp/home/data/repository/weather_api_respository.dart';
-import 'package:advanceweatherapp/home/domain/usecase/weather_api_uc.dart';
-import 'package:get_it/get_it.dart';
+import 'package:advanceweatherapp/injection_container/injection_index.dart';
 
 final GetIt getIt = GetIt.instance;
 

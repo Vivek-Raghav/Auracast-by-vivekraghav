@@ -1,5 +1,8 @@
-import 'package:get_it/get_it.dart';
+import 'package:advanceweatherapp/injection_container/injection_index.dart';
 
 final GetIt getIt = GetIt.instance;
 
-Future<void> injectDatasources() async {}
+Future<void> injectDatasources() async {
+  getIt.registerLazySingleton<WeatherApiDatasource>(
+      () => WeatherApiDatasourceImpl());
+}

@@ -1,4 +1,5 @@
 import 'package:advanceweatherapp/home/home_index.dart';
+import 'package:advanceweatherapp/injection_container/inject_blocs.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -6,7 +7,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GetIt.instance<HomeScreenBloc>(),
+      create: (context) => getIt<HomeScreenBloc>(),
       child: const HomeScreen(),
     );
   }

@@ -15,8 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<HomeScreenBloc>(context)
-        .add(FetchWeather(params: cityName));
+    context.read<HomeScreenBloc>().add(FetchWeather(params: cityName));
   }
 
   @override

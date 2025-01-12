@@ -1,6 +1,4 @@
-import 'package:advanceweatherapp/blocs/blocubit/home_screen_bloc.dart';
-import 'package:advanceweatherapp/home/domain/usecase/weather_api_uc.dart';
-import 'package:get_it/get_it.dart';
+import 'package:advanceweatherapp/injection_container/injection_index.dart';
 
 final GetIt getIt = GetIt.instance;
 

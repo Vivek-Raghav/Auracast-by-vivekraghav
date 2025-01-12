@@ -1,7 +1,10 @@
 import 'package:advanceweatherapp/home/home_index.dart';
 import 'package:advanceweatherapp/home/presentation/pages/home_page.dart';
+import 'package:advanceweatherapp/injection_container/injection_initializer.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await injectionInit();
   runApp(const MyApp());
 }
 
