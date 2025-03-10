@@ -1,9 +1,9 @@
 // Assuming the existence of these states
 import 'dart:async';
-import 'package:advanceweatherapp/blocs/event/internet_event.dart';
-import 'package:advanceweatherapp/blocs/state/internet_state.dart';
+import 'package:auracast/blocs/event/internet_event.dart';
+import 'package:auracast/blocs/state/internet_state.dart';
 import "package:connectivity_plus/connectivity_plus.dart";
-import 'package:advanceweatherapp/core/shared/utils/library/data_connection_checked/data_connection_checker.dart';
+import 'package:auracast/core/shared/utils/library/data_connection_checked/data_connection_checker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Bloc for managing internet connectivity

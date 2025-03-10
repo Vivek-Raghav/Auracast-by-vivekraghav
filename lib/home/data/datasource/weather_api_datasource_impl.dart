@@ -1,7 +1,7 @@
-import 'package:advanceweatherapp/core/const.dart';
-import 'package:advanceweatherapp/core/error/server_exception.dart';
-import 'package:advanceweatherapp/home/data/datasource/weather_api_datasource.dart';
-import 'package:advanceweatherapp/home/models/weather_api_response.dart';
+import 'package:auracast/core/const.dart';
+import 'package:auracast/core/error/server_exception.dart';
+import 'package:auracast/home/data/datasource/weather_api_datasource.dart';
+import 'package:auracast/home/models/weather_api_response.dart';
 import 'package:dio/dio.dart';
 
 class WeatherApiDatasourceImpl implements WeatherApiDatasource {
@@ -11,9 +11,9 @@ class WeatherApiDatasourceImpl implements WeatherApiDatasource {
     try {
       final pathUrl =
           "https://api.openweathermap.org/data/2.5/weather?q=$params&appid=$token";
-
       final response = await dio.get(pathUrl);
       if (response.statusCode == 200) {
+        print('Prining response => ${response.data}');
         return WeatherApiResponse.fromJson(response.data);
       } else {
         throw ServerException(error: "Failed to fetch weather data");

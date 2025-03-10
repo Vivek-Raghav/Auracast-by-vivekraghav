@@ -1,4 +1,4 @@
-package com.example.advanceweatherapp
+package com.example.auracast
 
 import io.flutter.embedding.android.FlutterActivity
 

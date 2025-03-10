@@ -40,8 +40,8 @@ Security is paramount in the Advance Weather App:
 To set up this project locally, follow the steps below:
 
 ```bash
-git clone https://github.com/Vivek-Raghav/advanceweatherapp.git
-cd advanceweatherapp
+git clone https://github.com/Vivek-Raghav/auracast.git
+cd auracast
 flutter pub get
 flutter run
 ```

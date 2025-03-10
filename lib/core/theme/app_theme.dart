@@ -1,4 +1,4 @@
-import 'package:advanceweatherapp/home/home_index.dart';
+import 'package:auracast/home/home_index.dart';
 
 class ThemeColors {
   static const Color clrTransparent = Color(0x00ffffff);
@@ -82,49 +82,32 @@ class AppTheme {
         fontWeight: FontWeight.w500,
       ),
       titleMedium: currentTextTheme.titleMedium!.copyWith(
-        color: defaultTextColor,
-        fontFamily: lexend,
-        fontWeight: FontWeight.w500,
-      ),
+          color: defaultTextColor,
+          fontFamily: lexend,
+          fontWeight: FontWeight.w500),
       titleSmall: currentTextTheme.titleSmall!.copyWith(
-        color: defaultTextColor,
-        fontFamily: lexend,
-        fontWeight: FontWeight.w400,
-        fontSize: 16,
-      ),
-      // Default values
-      // fontSize: 96.0,
-      // fontWeight: FontWeight.w300
-      displayLarge: currentTextTheme.displayLarge!.copyWith(
-        color: defaultTextColor,
-      ),
-      displayMedium: currentTextTheme.displayMedium!.copyWith(
-        color: defaultTextColor,
-      ),
-      displaySmall: currentTextTheme.displaySmall!.copyWith(
-        color: defaultTextColor,
-      ),
-      headlineSmall: currentTextTheme.headlineSmall!.copyWith(
-        color: defaultTextColor,
-      ),
-      labelMedium: currentTextTheme.titleLarge!.copyWith(
-        color: defaultTextColor,
-      ),
-      bodyLarge: currentTextTheme.bodyLarge!.copyWith(
-        color: defaultTextColor,
-      ),
-      bodyMedium: currentTextTheme.bodyMedium!.copyWith(
-        color: defaultTextColor,
-      ),
-      labelLarge: currentTextTheme.labelLarge!.copyWith(
-        color: defaultTextColor,
-      ),
-      bodySmall: currentTextTheme.bodySmall!.copyWith(
-        color: defaultTextColor,
-      ),
-      labelSmall: currentTextTheme.labelSmall!.copyWith(
-        color: defaultTextColor,
-      ),
+          color: defaultTextColor,
+          fontFamily: lexend,
+          fontWeight: FontWeight.w400,
+          fontSize: 16),
+      displayLarge:
+          currentTextTheme.displayLarge!.copyWith(color: defaultTextColor),
+      displayMedium:
+          currentTextTheme.displayMedium!.copyWith(color: defaultTextColor),
+      displaySmall:
+          currentTextTheme.displaySmall!.copyWith(color: defaultTextColor),
+      headlineSmall:
+          currentTextTheme.headlineSmall!.copyWith(color: defaultTextColor),
+      labelMedium:
+          currentTextTheme.titleLarge!.copyWith(color: defaultTextColor),
+      bodyLarge: currentTextTheme.bodyLarge!.copyWith(color: defaultTextColor),
+      bodyMedium:
+          currentTextTheme.bodyMedium!.copyWith(color: defaultTextColor),
+      labelLarge:
+          currentTextTheme.labelLarge!.copyWith(color: defaultTextColor),
+      bodySmall: currentTextTheme.bodySmall!.copyWith(color: defaultTextColor),
+      labelSmall:
+          currentTextTheme.labelSmall!.copyWith(color: defaultTextColor),
     );
   }
 
@@ -153,7 +136,6 @@ class AppThemeDark {
     );
   }
 
-  /// Theme data for Material and Elevated button
   static ElevatedButtonThemeData elevatedButtonThemeData() =>
       ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(

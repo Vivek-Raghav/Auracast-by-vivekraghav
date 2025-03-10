@@ -1,8 +1,8 @@
-import 'package:advanceweatherapp/injection_container/inject_blocs.dart';
-import 'package:advanceweatherapp/injection_container/inject_datasource.dart';
-import 'package:advanceweatherapp/injection_container/inject_repository.dart';
-import 'package:advanceweatherapp/injection_container/inject_usecase.dart';
-import 'package:advanceweatherapp/injection_container/injection_index.dart';
+import 'package:auracast/injection_container/inject_blocs.dart';
+import 'package:auracast/injection_container/inject_datasource.dart';
+import 'package:auracast/injection_container/inject_repository.dart';
+import 'package:auracast/injection_container/inject_usecase.dart';
+import 'package:auracast/injection_container/injection_index.dart';
 
 final GetIt getIt = GetIt.instance;
 

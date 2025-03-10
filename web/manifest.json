@@ -1,6 +1,6 @@
 {
-    "name": "advanceweatherapp",
-    "short_name": "advanceweatherapp",
+    "name": "auracast",
+    "short_name": "auracast",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

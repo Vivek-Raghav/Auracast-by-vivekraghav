@@ -1,4 +1,4 @@
-import 'package:advanceweatherapp/core/utils/generic_typedef.dart';
+import 'package:auracast/core/utils/generic_typedef.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class UseCase<Type, Params> {
