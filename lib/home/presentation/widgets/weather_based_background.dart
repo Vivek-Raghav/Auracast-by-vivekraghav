@@ -1,10 +1,16 @@
+// Dart imports:
 import 'dart:ui';
 
-import 'package:auracast/gen/assets.gen.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
+import 'package:auracast/core/shared/utils/generic_enums.dart';
+import 'package:auracast/gen/assets.gen.dart';
+
 class WeatherBasedBackground extends StatelessWidget {
-  const WeatherBasedBackground({super.key});
+  const WeatherBasedBackground({required this.weatherType, super.key});
+  final WeatherType? weatherType;
 
   @override
   Widget build(BuildContext context) {

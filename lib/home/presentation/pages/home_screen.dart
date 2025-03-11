@@ -1,9 +1,15 @@
+// Dart imports:
 import 'dart:ui';
 
+// Flutter imports:
+import 'package:auracast/injection_container/inject_blocs.dart';
+import 'package:flutter/foundation.dart';
+
+// Project imports:
 import 'package:auracast/core/shared/widgets/common_text_widgets.dart';
 import 'package:auracast/home/home_index.dart';
 import 'package:auracast/home/presentation/widgets/weather_based_background.dart';
-import 'package:flutter/foundation.dart';
+import 'package:auracast/home/presentation/widgets/weather_display_widget.dart';
 
 // BlocProvider creation with correct event dispatching
 class HomeScreen extends StatefulWidget {
@@ -15,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final String cityName = "Delhi";
-  WeatherApiResponse? weatherApiResponse;
+  final homeBloc = getIt<HomeScreenBloc>();
 
   @override
   void initState() {
@@ -24,12 +30,20 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void fetchWeather() {
-    if (weatherApiResponse == null) {
-      context.read<HomeScreenBloc>().add(FetchWeather(params: cityName));
-    } else {
-      if (kDebugMode) {
-        print("Data already fetched for $cityName");
+    debugPrint("Fetching weather for $cityName");
+    final currentState = homeBloc.state;
+    if (currentState is WeatherLoaded) {
+      if (currentState.weatherApiResponse.isEmpty) {
+        // List is empty, fetch new data
+        homeBloc.add(FetchWeather(params: cityName));
+      } else {
+        if (kDebugMode) {
+          print(
+              "Data already exists: ${currentState.weatherApiResponse.length} items");
+        }
       }
+    } else {
+      homeBloc.add(FetchWeather(params: cityName));
     }
   }
 
@@ -38,42 +52,39 @@ class _HomeScreenState extends State<HomeScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
-      body: BlocBuilder<HomeScreenBloc, HomeScreenState>(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          GestureDetector(
+              onTap: () => fetchWeather(),
+              child: const Icon(Icons.refresh,
+                  size: 34, color: ThemeColors.clrWhite)),
+        ],
+      ),
+      body: BlocConsumer<HomeScreenBloc, HomeScreenState>(
+        listener: (context, state) {
+          if (state is WeatherError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Error: ${state.message}')),
+            );
+          } else if (state is WeatherLoaded) {
+            // weatherApiResponse.addAll(state.weatherApiResponse);
+          }
+        },
         builder: (context, state) {
           if (state is WeatherLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is WeatherLoaded) {
-            weatherApiResponse = state.weatherApiResponse;
-            // WidgetsBinding.instance.addPostFrameCallback((_) {
-            //   _showCustomModalBottomSheet(context);
-            // });
-            return Stack(children: [
-              const WeatherBasedBackground(),
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: size.height * 0.1, width: double.infinity),
-                    Container(
-                        decoration: const BoxDecoration(),
-                        height: size.height * 0.3,
-                        child: Column(children: [
-                          HeadlineSmallTextWidget(
-                              text: state.weatherApiResponse.name!,
-                              color: ThemeColors.clrWhite),
-                          HeadlineSmallTextWidget(
-                              text:
-                                  "${temperatureConverter(state.weatherApiResponse.main!.temp!).toStringAsFixed(0)}°",
-                              fontSize: 80,
-                              color: ThemeColors.clrWhite),
-                          TitleMediumTextWidget(
-                              text: state.weatherApiResponse.weather![0].main!,
-                              color: const Color.fromARGB(255, 199, 193, 193),
-                              fontWeight: FontWeight.w600),
-                        ])),
-                  ])
-            ]);
+            return PageView.builder(
+                itemCount: 4,
+                itemBuilder: (context, index) {
+                  return Stack(children: [
+                    const WeatherBasedBackground(weatherType: null),
+                    WeatherDisplayWidget(
+                        weatherApiResponse: state.weatherApiResponse[0]),
+                  ]);
+                });
           } else if (state is WeatherError) {
             return Center(child: Text('Error: ${state.message}'));
           }
@@ -81,10 +92,6 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
     );
-  }
-
-  double temperatureConverter(double kelvin) {
-    return kelvin - 273.15;
   }
 
   void _showCustomModalBottomSheet(BuildContext context) {

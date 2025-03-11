@@ -1,10 +1,13 @@
+// Package imports:
+import 'package:dartz/dartz.dart';
+
+// Project imports:
 import 'package:auracast/core/error/failure.dart';
 import 'package:auracast/core/error/server_exception.dart';
 import 'package:auracast/core/utils/generic_typedef.dart';
 import 'package:auracast/home/data/datasource/weather_api_datasource.dart';
-import 'package:auracast/home/models/weather_api_response.dart';
 import 'package:auracast/home/data/repository/weather_api_respository.dart';
-import 'package:dartz/dartz.dart';
+import 'package:auracast/home/models/weather_api_response.dart';
 
 class WeatherApiRespositoryImpl implements WeatherApiRespository {
   final WeatherApiDatasource weatherApiDatasource;

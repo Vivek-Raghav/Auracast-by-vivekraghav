@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:auracast/home/home_index.dart';
 import 'package:auracast/home/presentation/pages/home_page.dart';
 import 'package:auracast/injection_container/injection_initializer.dart';
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Weather India',
+      title: "AuraCast: Weather Insights",
       theme: lightTheme(context),
       home: const HomePage(),
     );
