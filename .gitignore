@@ -21,6 +21,7 @@ migrate_working_dir/
 .advanceweatherapp.iml
 .analysis_options.yaml
 .pubspec.lock
+.fvmrc
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
@@ -38,6 +39,9 @@ migrate_working_dir/
 /build/
 /pubspec.lock
 /lib/core/const.dart
+/lib/firebase_options*
+/lib/firebase_options.dart
+/firebase.json
 
 # Symbolication related
 app.*.symbols

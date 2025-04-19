@@ -45,6 +45,7 @@ dependencies:
   get_it: ^8.0.3
   import_sorter: ^4.6.0
   shared_preferences: ^2.5.3
+  firebase_core: ^3.13.0
 
 dev_dependencies:
   flutter_test:

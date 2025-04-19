@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "339758742242",
+    "project_id": "my-portfolio-2efcb",
+    "storage_bucket": "my-portfolio-2efcb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339758742242:android:2e5d8343e0557f7ee53cbb",
+        "android_client_info": {
+          "package_name": "com.example.auracast"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-0NR2cphJK4GK6HGSGtCCKXTqPaCdym8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339758742242:android:4d1333e575aa4956e53cbb",
+        "android_client_info": {
+          "package_name": "weather.auracast.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-0NR2cphJK4GK6HGSGtCCKXTqPaCdym8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
