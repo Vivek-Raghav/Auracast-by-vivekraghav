@@ -3,7 +3,7 @@ import 'dart:ui';
 
 // Flutter imports:
 import 'package:auracast/home/presentation/widgets/weather_image_provider.dart';
-import 'package:auracast/injection_container/inject_blocs.dart';
+import 'package:auracast/injection_container/injected/inject_blocs.dart';
 import 'package:flutter/foundation.dart';
 
 // Project imports:
