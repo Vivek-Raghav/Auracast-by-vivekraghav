@@ -42,6 +42,7 @@ class WeatherDisplayWidget extends StatelessWidget {
                     "${temperatureConverter(weatherApiResponse!.main!.temp!).toStringAsFixed(0)}°",
                 fontSize: 80,
                 color: ThemeColors.clrWhite,
+                
               ),
               TitleMediumTextWidget(
                 text: weatherApiResponse!.weather![0].main!,

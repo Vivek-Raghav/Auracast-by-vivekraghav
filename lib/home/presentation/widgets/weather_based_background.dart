@@ -2,6 +2,8 @@
 import 'dart:ui';
 
 // Flutter imports:
+import 'package:auracast/core/theme/app_theme.dart';
+import 'package:auracast/home/presentation/widgets/weather_image_provider.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -17,13 +19,17 @@ class WeatherBasedBackground extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: Assets.images.homeBackground.provider(),
-              fit: BoxFit.cover,
-            ),
-          ),
+        Stack(
+          children: [
+            Container(
+                decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: getWeatherAsset(weatherType ?? WeatherType.clear)
+                      .provider(),
+                  fit: BoxFit.cover),
+            )),
+            Container(color: Colors.black.withOpacity(0.5))
+          ],
         ),
         Column(
           children: [

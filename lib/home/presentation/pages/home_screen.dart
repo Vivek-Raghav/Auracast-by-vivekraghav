@@ -2,11 +2,11 @@
 import 'dart:ui';
 
 // Flutter imports:
+import 'package:auracast/home/presentation/widgets/weather_image_provider.dart';
 import 'package:auracast/injection_container/inject_blocs.dart';
 import 'package:flutter/foundation.dart';
 
 // Project imports:
-import 'package:auracast/core/shared/widgets/common_text_widgets.dart';
 import 'package:auracast/home/home_index.dart';
 import 'package:auracast/home/presentation/widgets/weather_based_background.dart';
 import 'package:auracast/home/presentation/widgets/weather_display_widget.dart';
@@ -34,12 +34,11 @@ class _HomeScreenState extends State<HomeScreen> {
     final currentState = homeBloc.state;
     if (currentState is WeatherLoaded) {
       if (currentState.weatherApiResponse.isEmpty) {
-        // List is empty, fetch new data
         homeBloc.add(FetchWeather(params: cityName));
       } else {
         if (kDebugMode) {
           print(
-              "Data already exists: ${currentState.weatherApiResponse.length} items");
+              "Data already exists: ${currentState.weatherApiResponse[0].weather?[0].main}");
         }
       }
     } else {
@@ -49,7 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -69,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SnackBar(content: Text('Error: ${state.message}')),
             );
           } else if (state is WeatherLoaded) {
-            // weatherApiResponse.addAll(state.weatherApiResponse);
+            final WeatherType = state.weatherApiResponse[0].weather?[0].main;
           }
         },
         builder: (context, state) {
@@ -79,8 +77,10 @@ class _HomeScreenState extends State<HomeScreen> {
             return PageView.builder(
                 itemCount: 4,
                 itemBuilder: (context, index) {
+                  final weather = parseWeatherType(
+                      state.weatherApiResponse[0].weather?[0].main);
                   return Stack(children: [
-                    const WeatherBasedBackground(weatherType: null),
+                    WeatherBasedBackground(weatherType: weather),
                     WeatherDisplayWidget(
                         weatherApiResponse: state.weatherApiResponse[0]),
                   ]);
@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 topRight: Radius.circular(20),
               ),
             ),
-            child: Center(
+            child: const Center(
               child: Text("Your Content Here"),
             ),
           ),

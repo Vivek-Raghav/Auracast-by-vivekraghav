@@ -24,10 +24,7 @@ class TitleMediumTextWidget extends StatelessWidget {
     return Text(
       text,
       style: defaultStyle?.copyWith(
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        color: color,
-      ),
+          fontSize: fontSize, fontWeight: fontWeight, color: color),
     );
   }
 }

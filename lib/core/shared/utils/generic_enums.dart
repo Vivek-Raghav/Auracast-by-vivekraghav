@@ -17,3 +17,12 @@ enum WeatherType {
   clear,
   clouds,
 }
+
+enum ThemeModeApp {
+  Light,
+  Dark,
+  Grey,
+  Red,
+  Green,
+  System
+}
