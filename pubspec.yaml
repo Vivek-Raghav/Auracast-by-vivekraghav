@@ -77,6 +77,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/weathertype/
+    - assets/icons/weather/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

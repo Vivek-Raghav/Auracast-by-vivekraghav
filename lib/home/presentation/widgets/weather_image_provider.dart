@@ -1,4 +1,6 @@
 // Function to map WeatherType to asset paths
+
+// Project imports:
 import 'package:auracast/core/shared/utils/generic_enums.dart';
 import 'package:auracast/gen/assets.gen.dart';
 
@@ -37,6 +39,41 @@ AssetGenImage getWeatherAsset(WeatherType weatherType) {
   }
 }
 
+AssetGenImage getWeatherIcon(WeatherType weatherType) {
+  switch (weatherType) {
+    case WeatherType.clear:
+      return Assets.icons.weather.clear;
+    case WeatherType.clouds:
+      return Assets.icons.weather.clouds;
+    case WeatherType.rain:
+      return Assets.icons.weather.rain;
+    case WeatherType.drizzle:
+      return Assets.icons.weather.drizzle;
+    case WeatherType.snow:
+      return Assets.icons.weather.snow;
+    case WeatherType.thunderstorm:
+      return Assets.icons.weather.thunderstorm;
+    case WeatherType.mist:
+      return Assets.icons.weather.mist;
+    case WeatherType.smoke:
+      return Assets.icons.weather.smoke;
+    case WeatherType.haze:
+      return Assets.icons.weather.haze;
+    case WeatherType.dust:
+      return Assets.icons.weather.dust;
+    case WeatherType.fog:
+      return Assets.icons.weather.fog;
+    case WeatherType.sand:
+      return Assets.icons.weather.sand;
+    case WeatherType.ash:
+      return Assets.icons.weather.ash;
+    case WeatherType.squall:
+      return Assets.icons.weather.squall;
+    case WeatherType.tornado:
+      return Assets.icons.weather.tornado;
+  }
+}
+
 WeatherType parseWeatherType(String? main) {
   if (main == null) return WeatherType.clear;
 
@@ -72,6 +109,6 @@ WeatherType parseWeatherType(String? main) {
     case 'clouds':
       return WeatherType.clouds;
     default:
-      return WeatherType.clear; 
+      return WeatherType.clear;
   }
 }

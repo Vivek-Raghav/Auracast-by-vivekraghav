@@ -1,9 +1,11 @@
+// Package imports:
+import 'package:firebase_core/firebase_core.dart';
+
 // Project imports:
 import 'package:auracast/firebase_options.dart';
 import 'package:auracast/home/home_index.dart';
 import 'package:auracast/home/presentation/pages/home_page.dart';
 import 'package:auracast/injection_container/injection_initializer.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

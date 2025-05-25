@@ -1,15 +1,17 @@
 // Dart imports:
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:ui';
 
 // Flutter imports:
-import 'package:auracast/home/presentation/widgets/weather_image_provider.dart';
-import 'package:auracast/injection_container/injected/inject_blocs.dart';
 import 'package:flutter/foundation.dart';
 
 // Project imports:
 import 'package:auracast/home/home_index.dart';
 import 'package:auracast/home/presentation/widgets/weather_based_background.dart';
 import 'package:auracast/home/presentation/widgets/weather_display_widget.dart';
+import 'package:auracast/home/presentation/widgets/weather_image_provider.dart';
+import 'package:auracast/injection_container/injected/inject_blocs.dart';
 
 // BlocProvider creation with correct event dispatching
 class HomeScreen extends StatefulWidget {
@@ -66,19 +68,17 @@ class _HomeScreenState extends State<HomeScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Error: ${state.message}')),
             );
-          } else if (state is WeatherLoaded) {
-            final WeatherType = state.weatherApiResponse[0].weather?[0].main;
           }
         },
         builder: (context, state) {
           if (state is WeatherLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is WeatherLoaded) {
+            final weather =
+                parseWeatherType(state.weatherApiResponse[0].weather?[0].main);
             return PageView.builder(
                 itemCount: 4,
                 itemBuilder: (context, index) {
-                  final weather = parseWeatherType(
-                      state.weatherApiResponse[0].weather?[0].main);
                   return Stack(children: [
                     WeatherBasedBackground(weatherType: weather),
                     WeatherDisplayWidget(
@@ -91,31 +91,6 @@ class _HomeScreenState extends State<HomeScreen> {
           return Container();
         },
       ),
-    );
-  }
-
-  void _showCustomModalBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return FractionallySizedBox(
-          heightFactor: 0.7,
-          child: Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
-            ),
-            child: const Center(
-              child: Text("Your Content Here"),
-            ),
-          ),
-        );
-      },
     );
   }
 }
