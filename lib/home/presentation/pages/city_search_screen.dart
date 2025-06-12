@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:auracast/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -63,39 +66,91 @@ class _CitySearchScreenState extends State<CitySearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Search City'),
-      ),
-      body: Column(
+      backgroundColor: Colors.transparent,
+      body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: 'Search for a city...',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+          SizedBox(
+            height: double.infinity,
+            child: Assets.images.bgSearchCity2.image(fit: BoxFit.cover),
+          ),
+          Positioned.fill(
+            child: ClipRRect(
+              // match your rounded‐corner aesthetic if you like
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                child: Container(
+                  color: Colors.white.withOpacity(0.22),
                 ),
-                filled: true,
-                fillColor: Colors.white,
               ),
-              onChanged: _filterCities,
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: filteredCities.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(filteredCities[index]),
-                  onTap: () {
-                    // Navigate back with the selected city using GoRouter
-                    context.pop(filteredCities[index]);
-                  },
-                );
-              },
+          SafeArea(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: GlassSearchField(
+                          controller: _searchController,
+                          onChanged: _filterCities,
+                          hintText: 'Search for a city…',
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () => context.pop(),
+                      icon: Icon(
+                        Icons.close,
+                        size: 30,
+                        color: Colors.white.withOpacity(0.8),
+                      ),
+                    )
+                  ],
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    itemCount: filteredCities.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                            child: Container(
+                              color: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(0.20),
+                              child: ListTile(
+                                leading: Icon(Icons.location_city,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary),
+                                title: Text(
+                                  filteredCities[index],
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                ),
+                                onTap: () => context.pop(filteredCities[index]),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -107,5 +162,62 @@ class _CitySearchScreenState extends State<CitySearchScreen> {
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+}
+
+class GlassSearchField extends StatelessWidget {
+  final TextEditingController controller;
+  final ValueChanged<String> onChanged;
+  final String hintText;
+
+  const GlassSearchField({
+    super.key,
+    required this.controller,
+    required this.onChanged,
+    this.hintText = 'Search for a city...',
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(24),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          height: 50,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.15),
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: Colors.white.withOpacity(0.25)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                offset: const Offset(0, 4),
+                blurRadius: 8,
+              )
+            ],
+          ),
+          child: Row(
+            children: [
+              Icon(Icons.search, color: Colors.white.withOpacity(0.8)),
+              const SizedBox(width: 12),
+              Expanded(
+                child: TextField(
+                  controller: controller,
+                  onChanged: onChanged,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    hintText: hintText,
+                    hintStyle: TextStyle(color: Colors.white70),
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

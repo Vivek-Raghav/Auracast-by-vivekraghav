@@ -30,6 +30,14 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/bg_search_city.png
+  AssetGenImage get bgSearchCity =>
+      const AssetGenImage('assets/images/bg_search_city.png');
+
+  /// File path: assets/images/bg_search_city2.png
+  AssetGenImage get bgSearchCity2 =>
+      const AssetGenImage('assets/images/bg_search_city2.png');
+
   /// File path: assets/images/home_background.png
   AssetGenImage get homeBackground =>
       const AssetGenImage('assets/images/home_background.png');
@@ -38,7 +46,8 @@ class $AssetsImagesGen {
   AssetGenImage get house => const AssetGenImage('assets/images/house.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [homeBackground, house];
+  List<AssetGenImage> get values =>
+      [bgSearchCity, bgSearchCity2, homeBackground, house];
 }
 
 class $AssetsWeathertypeGen {

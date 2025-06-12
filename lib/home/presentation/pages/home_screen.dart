@@ -32,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     } else {
       homeBloc.add(FetchWeather(params: "Delhi"));
+      currentCity.add("Delhi");
     }
   }
 
