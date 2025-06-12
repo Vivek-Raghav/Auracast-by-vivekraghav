@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:auracast/core/constants/global_const.dart';
 import 'package:auracast/routes/routes_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      scaffoldMessengerKey: GlobalKeys.rootScaffoldMessengerKey,
       debugShowCheckedModeBanner: false,
       title: "AuraCast: Weather Insights",
       theme: lightTheme(context),

@@ -1,3 +1,4 @@
+import 'package:auracast/core/shared/domain/method/methods.dart';
 import 'package:auracast/home/home_index.dart';
 
 // BlocProvider creation with correct event dispatching
@@ -38,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final selectedCity = await context.push<String>(AppRoutes.citySearch);
     if (selectedCity != null) {
       if (currentCity.contains(selectedCity)) {
+        showToast(title: "$selectedCity is already added");
         return;
       } else {
         currentCity.add(selectedCity);
