@@ -1,10 +1,10 @@
 // Package imports:
+import 'package:auracast/routes/routes_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 // Project imports:
 import 'package:auracast/firebase_options.dart';
 import 'package:auracast/home/home_index.dart';
-import 'package:auracast/home/presentation/pages/home_page.dart';
 import 'package:auracast/injection_container/injection_initializer.dart';
 
 void main() async {
@@ -19,11 +19,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: "AuraCast: Weather Insights",
       theme: lightTheme(context),
-      home: const HomePage(),
+      routerConfig: appRouter,
     );
   }
 }

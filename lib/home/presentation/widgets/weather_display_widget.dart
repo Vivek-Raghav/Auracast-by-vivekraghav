@@ -30,6 +30,7 @@ class WeatherDisplayWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 20),
             Container(
               decoration: const BoxDecoration(),
               height: size.height * 0.3,

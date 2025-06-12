@@ -1,17 +1,4 @@
-// Dart imports:
-// ignore_for_file: use_build_context_synchronously
-
-import 'dart:ui';
-
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-
-// Project imports:
 import 'package:auracast/home/home_index.dart';
-import 'package:auracast/home/presentation/widgets/weather_based_background.dart';
-import 'package:auracast/home/presentation/widgets/weather_display_widget.dart';
-import 'package:auracast/home/presentation/widgets/weather_image_provider.dart';
-import 'package:auracast/injection_container/injected/inject_blocs.dart';
 
 // BlocProvider creation with correct event dispatching
 class HomeScreen extends StatefulWidget {
@@ -22,7 +9,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final String cityName = "Delhi";
+  List<String> currentCity = [];
   final homeBloc = getIt<HomeScreenBloc>();
 
   @override
@@ -32,11 +19,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void fetchWeather() {
-    debugPrint("Fetching weather for $cityName");
     final currentState = homeBloc.state;
     if (currentState is WeatherLoaded) {
       if (currentState.weatherApiResponse.isEmpty) {
-        homeBloc.add(FetchWeather(params: cityName));
+        homeBloc.add(FetchWeather(params: "Delhi"));
       } else {
         if (kDebugMode) {
           print(
@@ -44,7 +30,19 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       }
     } else {
-      homeBloc.add(FetchWeather(params: cityName));
+      homeBloc.add(FetchWeather(params: "Delhi"));
+    }
+  }
+
+  Future<void> _searchCity() async {
+    final selectedCity = await context.push<String>(AppRoutes.citySearch);
+    if (selectedCity != null) {
+      if (currentCity.contains(selectedCity)) {
+        return;
+      } else {
+        currentCity.add(selectedCity);
+        homeBloc.add(FetchWeather(params: selectedCity));
+      }
     }
   }
 
@@ -55,11 +53,13 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        title: GlassSearchBar(onTap: _searchCity),
         actions: [
           GestureDetector(
-              onTap: () => fetchWeather(),
-              child: const Icon(Icons.refresh,
-                  size: 34, color: ThemeColors.clrWhite)),
+            onTap: () => fetchWeather(),
+            child: const Icon(Icons.refresh,
+                size: 34, color: ThemeColors.clrWhite),
+          ),
         ],
       ),
       body: BlocConsumer<HomeScreenBloc, HomeScreenState>(
@@ -74,15 +74,16 @@ class _HomeScreenState extends State<HomeScreen> {
           if (state is WeatherLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is WeatherLoaded) {
-            final weather =
-                parseWeatherType(state.weatherApiResponse[0].weather?[0].main);
             return PageView.builder(
-                itemCount: 4,
+                physics: const ClampingScrollPhysics(),
+                itemCount: state.weatherApiResponse.length,
                 itemBuilder: (context, index) {
+                  final weather = parseWeatherType(
+                      state.weatherApiResponse[index].weather?[0].main);
                   return Stack(children: [
                     WeatherBasedBackground(weatherType: weather),
                     WeatherDisplayWidget(
-                        weatherApiResponse: state.weatherApiResponse[0]),
+                        weatherApiResponse: state.weatherApiResponse[index]),
                   ]);
                 });
           } else if (state is WeatherError) {

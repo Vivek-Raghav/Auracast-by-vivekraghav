@@ -13,7 +13,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   HomeScreenBloc(this.weatherApiUC) : super(HomeScreenInitial()) {
     on<FetchWeather>(_onFetchWeather);
   }
-  List<WeatherApiResponse> ApiResponse = [];
+  List<WeatherApiResponse> apiResponse = [];
   Future<void> _onFetchWeather(
       FetchWeather event, Emitter<HomeScreenState> emit) async {
     emit(WeatherLoading());
@@ -21,8 +21,8 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       final result = await weatherApiUC(event.params);
       result.fold((failure) => emit(WeatherError(message: failure.toString())),
           (data) {
-        ApiResponse.add(data);
-        emit(WeatherLoaded(List.from(ApiResponse)));
+        apiResponse.add(data);
+        emit(WeatherLoaded(weatherApiResponse: List.from(apiResponse)));
       });
     } catch (e) {
       emit(WeatherError(message: e.toString()));

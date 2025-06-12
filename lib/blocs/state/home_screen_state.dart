@@ -10,7 +10,7 @@ class HomeScreenInitial extends HomeScreenState {}
 class WeatherLoading extends HomeScreenState {}
 
 class WeatherLoaded extends HomeScreenState {
-  WeatherLoaded(this.weatherApiResponse);
+  WeatherLoaded({required this.weatherApiResponse});
   List<WeatherApiResponse> weatherApiResponse;
 }
 
