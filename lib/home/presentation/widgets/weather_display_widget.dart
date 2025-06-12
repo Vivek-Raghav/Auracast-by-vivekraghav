@@ -23,36 +23,41 @@ class WeatherDisplayWidget extends StatelessWidget {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(height: size.height * 0.1, width: double.infinity),
-        Container(
-          decoration: const BoxDecoration(),
-          height: size.height * 0.3,
-          child: Column(
-            children: [
-              HeadlineSmallTextWidget(
-                text: weatherApiResponse!.name!,
-                color: ThemeColors.clrWhite,
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 20),
+            Container(
+              decoration: const BoxDecoration(),
+              height: size.height * 0.3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  HeadlineSmallTextWidget(
+                    text: weatherApiResponse!.name!,
+                    color: ThemeColors.clrWhite,
+                  ),
+                  HeadlineSmallTextWidget(
+                    text:
+                        "${temperatureConverter(weatherApiResponse!.main!.temp!).toStringAsFixed(0)}°",
+                    fontSize: 80,
+                    color: ThemeColors.clrWhite,
+                  ),
+                  TitleMediumTextWidget(
+                    text: weatherApiResponse!.weather![0].main!,
+                    color: const Color.fromARGB(255, 199, 193, 193),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ],
               ),
-              HeadlineSmallTextWidget(
-                text:
-                    "${temperatureConverter(weatherApiResponse!.main!.temp!).toStringAsFixed(0)}°",
-                fontSize: 80,
-                color: ThemeColors.clrWhite,
-                
-              ),
-              TitleMediumTextWidget(
-                text: weatherApiResponse!.weather![0].main!,
-                color: const Color.fromARGB(255, 199, 193, 193),
-                fontWeight: FontWeight.w600,
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

@@ -20,6 +20,9 @@ class $AssetsIconsGen {
   AssetGenImage get appIconPng =>
       const AssetGenImage('assets/icons/app_icon.png');
 
+  /// Directory path: assets/icons/weather
+  $AssetsIconsWeatherGen get weather => const $AssetsIconsWeatherGen();
+
   /// List of all assets
   List<AssetGenImage> get values => [appIconJpeg, appIconPng];
 }
@@ -108,6 +111,87 @@ class $AssetsWeathertypeGen {
         haze,
         mist,
         night,
+        rain,
+        sand,
+        smoke,
+        snow,
+        squall,
+        thunderstorm,
+        tornado
+      ];
+}
+
+class $AssetsIconsWeatherGen {
+  const $AssetsIconsWeatherGen();
+
+  /// File path: assets/icons/weather/ash.png
+  AssetGenImage get ash => const AssetGenImage('assets/icons/weather/ash.png');
+
+  /// File path: assets/icons/weather/clear.png
+  AssetGenImage get clear =>
+      const AssetGenImage('assets/icons/weather/clear.png');
+
+  /// File path: assets/icons/weather/clouds.png
+  AssetGenImage get clouds =>
+      const AssetGenImage('assets/icons/weather/clouds.png');
+
+  /// File path: assets/icons/weather/drizzle.png
+  AssetGenImage get drizzle =>
+      const AssetGenImage('assets/icons/weather/drizzle.png');
+
+  /// File path: assets/icons/weather/dust.png
+  AssetGenImage get dust =>
+      const AssetGenImage('assets/icons/weather/dust.png');
+
+  /// File path: assets/icons/weather/fog.png
+  AssetGenImage get fog => const AssetGenImage('assets/icons/weather/fog.png');
+
+  /// File path: assets/icons/weather/haze.png
+  AssetGenImage get haze =>
+      const AssetGenImage('assets/icons/weather/haze.png');
+
+  /// File path: assets/icons/weather/mist.png
+  AssetGenImage get mist =>
+      const AssetGenImage('assets/icons/weather/mist.png');
+
+  /// File path: assets/icons/weather/rain.png
+  AssetGenImage get rain =>
+      const AssetGenImage('assets/icons/weather/rain.png');
+
+  /// File path: assets/icons/weather/sand.png
+  AssetGenImage get sand =>
+      const AssetGenImage('assets/icons/weather/sand.png');
+
+  /// File path: assets/icons/weather/smoke.png
+  AssetGenImage get smoke =>
+      const AssetGenImage('assets/icons/weather/smoke.png');
+
+  /// File path: assets/icons/weather/snow.png
+  AssetGenImage get snow =>
+      const AssetGenImage('assets/icons/weather/snow.png');
+
+  /// File path: assets/icons/weather/squall.png
+  AssetGenImage get squall =>
+      const AssetGenImage('assets/icons/weather/squall.png');
+
+  /// File path: assets/icons/weather/thunderstorm.png
+  AssetGenImage get thunderstorm =>
+      const AssetGenImage('assets/icons/weather/thunderstorm.png');
+
+  /// File path: assets/icons/weather/tornado.png
+  AssetGenImage get tornado =>
+      const AssetGenImage('assets/icons/weather/tornado.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [
+        ash,
+        clear,
+        clouds,
+        drizzle,
+        dust,
+        fog,
+        haze,
+        mist,
         rain,
         sand,
         smoke,
