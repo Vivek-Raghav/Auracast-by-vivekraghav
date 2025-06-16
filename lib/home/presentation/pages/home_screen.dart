@@ -12,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<String> currentCity = [];
   final homeBloc = getIt<HomeScreenBloc>();
+  final _pageController = PageController();
 
   @override
   void initState() {
@@ -67,10 +68,21 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: BlocConsumer<HomeScreenBloc, HomeScreenState>(
         listener: (context, state) {
-          if (state is WeatherError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error: ${state.message}')),
-            );
+          if (state is WeatherLoaded) {
+            // 
+            // Using WidgetsBinding to safely get _pageController data first and navigate to screen
+            // 
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (!_pageController.hasClients) return;
+              _pageController.animateToPage(state.weatherApiResponse.length - 1,
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeInOut);
+            });
+            // 
+            // Choose your fav curve
+            // 
+          } else if (state is WeatherError) {
+            showToast(title: "Text('Error: ${state.message}");
           }
         },
         builder: (context, state) {
@@ -78,6 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return const Center(child: CircularProgressIndicator());
           } else if (state is WeatherLoaded) {
             return PageView.builder(
+                controller: _pageController,
                 physics: const ClampingScrollPhysics(),
                 itemCount: state.weatherApiResponse.length,
                 itemBuilder: (context, index) {
