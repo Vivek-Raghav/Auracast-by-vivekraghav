@@ -1,5 +1,5 @@
-import 'package:auracast/core/shared/domain/method/methods.dart';
 import 'package:auracast/home/home_index.dart';
+import 'package:auracast/home/presentation/widgets/dot_indicator.dart';
 
 // BlocProvider creation with correct event dispatching
 class HomeScreen extends StatefulWidget {
@@ -11,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<String> currentCity = [];
+  int _currentIndex = 0;
   final homeBloc = getIt<HomeScreenBloc>();
   final _pageController = PageController();
 
@@ -18,6 +19,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     fetchWeather();
+    _pageController.addListener(() {
+      setState(() {
+        _currentIndex = _pageController.page?.round() ?? 0;
+      });
+    });
   }
 
   void fetchWeather() {
@@ -55,32 +61,46 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: GlassSearchBar(onTap: _searchCity),
-        actions: [
-          GestureDetector(
-            onTap: () => fetchWeather(),
-            child: const Icon(Icons.refresh,
-                size: 34, color: ThemeColors.clrWhite),
-          ),
-        ],
-      ),
+          backgroundColor: Colors.transparent,
+          toolbarHeight: currentCity.length > 1 ? 100 : null,
+          elevation: 0,
+          title: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: GlassSearchBar(onTap: _searchCity),
+                  ),
+                  const SizedBox(width: 12), // optional spacing
+                  GestureDetector(
+                    onTap: fetchWeather,
+                    child: const Icon(Icons.refresh,
+                        size: 34, color: ThemeColors.clrWhite),
+                  ),
+                ],
+              ),
+              SizedBox(height: currentCity.length > 1 ? 10 : 0),
+              if (currentCity.length > 1)
+                DotIndicator(
+                    length: currentCity.length, currentIndex: _currentIndex)
+            ],
+          )),
       body: BlocConsumer<HomeScreenBloc, HomeScreenState>(
         listener: (context, state) {
           if (state is WeatherLoaded) {
-            // 
+            //
             // Using WidgetsBinding to safely get _pageController data first and navigate to screen
-            // 
+            //
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (!_pageController.hasClients) return;
               _pageController.animateToPage(state.weatherApiResponse.length - 1,
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.easeInOut);
             });
-            // 
+            //
             // Choose your fav curve
-            // 
+            //
           } else if (state is WeatherError) {
             showToast(title: "Text('Error: ${state.message}");
           }
@@ -94,13 +114,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 physics: const ClampingScrollPhysics(),
                 itemCount: state.weatherApiResponse.length,
                 itemBuilder: (context, index) {
-                  final weather = parseWeatherType(
-                      state.weatherApiResponse[index].weather?[0].main);
-                  return Stack(children: [
-                    WeatherBasedBackground(weatherType: weather),
-                    WeatherDisplayWidget(
-                        weatherApiResponse: state.weatherApiResponse[index]),
-                  ]);
+                  return WeatherDataPages(
+                      weatherApiResponse: state.weatherApiResponse[index]);
                 });
           } else if (state is WeatherError) {
             return Center(child: Text('Error: ${state.message}'));

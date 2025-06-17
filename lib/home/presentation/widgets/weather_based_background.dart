@@ -47,18 +47,6 @@ class WeatherBasedBackground extends StatelessWidget {
             ),
           ),
         ),
-        SafeArea(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                const SizedBox(height: 20),
-                SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.15,
-                    child: getWeatherIcon(weatherType ?? WeatherType.clear)
-                        .image())
-              ]),
-        ),
       ],
     );
   }
