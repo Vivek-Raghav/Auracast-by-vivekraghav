@@ -32,10 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void fetchWeather() async {
     final currentState = homeBloc.state;
+    final citName =
+        await _localCache.getString(PrefsKey.defaultCity) ?? "Delhi";
     if (currentState is WeatherLoaded) {
       if (currentState.weatherApiResponse.isEmpty) {
-        final citName =
-            await _localCache.getString(PrefsKey.defaultCity) ?? "Delhi";
         homeBloc.add(FetchWeather(params: citName));
         currentCity.add(citName);
       } else {
@@ -45,8 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       }
     } else {
-      homeBloc.add(FetchWeather(params: "Delhi"));
-      currentCity.add("Delhi");
+      homeBloc.add(FetchWeather(params: citName));
+      currentCity.add(citName);
     }
   }
 
@@ -75,6 +75,10 @@ class _HomeScreenState extends State<HomeScreen> {
         currentCity[index] = selectedCity;
         homeBloc.add(UpdateWeather(params: selectedCity, index: index));
       }
+    }
+    if (index == 0) {
+      _localCache.setString(
+          PrefsKey.defaultCity, selectedCity ?? currentCity[index]);
     }
   }
 
@@ -136,7 +140,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: double.infinity,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: Colors.red,
                     image: DecorationImage(
                         fit: BoxFit.cover,
                         image: Assets.images.bgSearchCity.provider())),

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:auracast/home/home_index.dart';
 
 class WeatherDisplayWidget extends StatelessWidget {
