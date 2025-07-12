@@ -3,9 +3,13 @@ import 'package:auracast/home/home_index.dart';
 class WeatherDisplayWidget extends StatelessWidget {
   final WeatherApiResponse? weatherApiResponse;
   final WeatherType? weatherType;
+  final VoidCallback updateCurrentCity;
 
   const WeatherDisplayWidget(
-      {super.key, required this.weatherApiResponse, required this.weatherType});
+      {super.key,
+      required this.weatherApiResponse,
+      required this.weatherType,
+      required this.updateCurrentCity});
 
   double temperatureConverter(double kelvin) {
     return kelvin - 273.15;
@@ -59,7 +63,15 @@ class WeatherDisplayWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const SizedBox(height: 20),
+                      GestureDetector(
+                        onTap: updateCurrentCity,
+                        child: Container(
+                          decoration: const BoxDecoration(),
+                          child: Icon(Icons.edit_location_alt_outlined,
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              size: 30),
+                        ),
+                      ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.15,
                           child:

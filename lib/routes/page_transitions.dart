@@ -11,13 +11,13 @@ CustomTransitionPage<T> customTransitionPage<T>({
     child: child,
     opaque: false,
     barrierColor: Colors.transparent,
-    maintainState: true,
-    transitionDuration: const Duration(milliseconds: 300),
-    reverseTransitionDuration: const Duration(milliseconds: 220),
+    maintainState: true, // ← keep the widget alive
+    transitionDuration: const Duration(milliseconds: 350),
+    reverseTransitionDuration: const Duration(milliseconds: 250),
     transitionsBuilder: (ctx, anim, secAnim, child) {
       final curved = CurvedAnimation(
         parent: anim,
-        curve: Curves.easeInOutCubic,
+        curve: Curves.easeInOutExpo,
       );
       return FadeTransition(
         opacity: curved,

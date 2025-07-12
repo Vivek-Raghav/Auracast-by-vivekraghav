@@ -15,11 +15,7 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.citySearch,
-      pageBuilder: (context, state) => customTransitionPage(
-        context: context,
-        state: state,
-        child: const CitySearchScreen(),
-      ),
+      builder: (context, state) => const CitySearchScreen(),
     ),
   ],
 );

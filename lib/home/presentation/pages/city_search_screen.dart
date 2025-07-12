@@ -67,11 +67,13 @@ class _CitySearchScreenState extends State<CitySearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           SizedBox(
             height: double.infinity,
-            child: Assets.images.bgSearchCity2.image(fit: BoxFit.cover),
+            width: double.infinity,
+            child: Assets.images.bgSearchCity.image(fit: BoxFit.cover),
           ),
           Positioned.fill(
             child: ClipRRect(
@@ -116,34 +118,27 @@ class _CitySearchScreenState extends State<CitySearchScreen> {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(16),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                            child: Container(
+                        child: Container(
+                          decoration: BoxDecoration(
                               color: Theme.of(context)
                                   .primaryColor
                                   .withOpacity(0.20),
-                              child: ListTile(
-                                leading: Icon(Icons.location_city,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimary),
-                                title: Text(
-                                  filteredCities[index],
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimary,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                                onTap: () => context.pop(filteredCities[index]),
-                              ),
+                              borderRadius: BorderRadius.circular(12)),
+                          child: ListTile(
+                            leading: Icon(Icons.location_city,
+                                color: Theme.of(context).colorScheme.onPrimary),
+                            title: Text(
+                              filteredCities[index],
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                             ),
+                            onTap: () => context.pop(filteredCities[index]),
                           ),
                         ),
                       );
