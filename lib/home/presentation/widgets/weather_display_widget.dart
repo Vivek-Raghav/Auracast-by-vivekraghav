@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:auracast/home/home_index.dart';
 
 class WeatherDisplayWidget extends StatelessWidget {
@@ -80,8 +82,110 @@ class WeatherDisplayWidget extends StatelessWidget {
                     ]),
               ],
             ),
+            SizedBox(height: size.height * 0.05),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: GlassDetailsContainer(
+                            title: "Feels like",
+                            subtitle:
+                                "${temperatureConverter(weatherApiResponse!.main!.feelsLike!).toStringAsFixed(0)}°"),
+                      ),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: GlassDetailsContainer(
+                            title: "Humidity",
+                            subtitle:
+                                "${weatherApiResponse!.main!.humidity!.toStringAsFixed(0)}%"),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: GlassDetailsContainer(
+                            title: "Min Temp.",
+                            subtitle:
+                                "${temperatureConverter(weatherApiResponse!.main!.tempMin!).toStringAsFixed(0)}°"),
+                      ),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: GlassDetailsContainer(
+                            title: "Max Temp.",
+                            subtitle:
+                                "${temperatureConverter(weatherApiResponse!.main!.tempMax!).toStringAsFixed(0)}°"),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: GlassDetailsContainer(
+                            title: "Pressure",
+                            subtitle:
+                                weatherApiResponse!.main!.pressure!.toString()),
+                      ),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: GlassDetailsContainer(
+                            title: "Ground Level",
+                            subtitle: weatherApiResponse!.main!.grndLevel!
+                                .toString()),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class GlassDetailsContainer extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  const GlassDetailsContainer(
+      {required this.title, required this.subtitle, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.15),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+            color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.3)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            offset: const Offset(0, 4),
+            blurRadius: 8,
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          HeadlineSmallTextWidget(
+            text: title,
+            color: ThemeColors.clrWhite,
+          ),
+          HeadlineSmallTextWidget(
+            text: subtitle,
+            color: ThemeColors.clrWhite,
+          ),
+        ],
       ),
     );
   }

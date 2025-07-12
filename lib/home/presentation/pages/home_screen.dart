@@ -17,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final homeBloc = getIt<HomeScreenBloc>();
   final _pageController = PageController();
   final _localCache = getIt<LocalCache>();
+  bool _isUpdating = false;
 
   @override
   void initState() {
@@ -50,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _searchCity() async {
+    _isUpdating = false;
     final selectedCity = await context.push<String>(AppRoutes.citySearch);
     if (selectedCity != null) {
       if (currentCity.contains(selectedCity)) {
@@ -63,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _updateCity(int index) async {
+    _isUpdating = true;
     final selectedCity = await context.push<String>(AppRoutes.citySearch);
     if (selectedCity != null) {
       if (currentCity.contains(selectedCity)) {
@@ -111,12 +114,15 @@ class _HomeScreenState extends State<HomeScreen> {
             //
             // Using WidgetsBinding to safely get _pageController data first and navigate to screen
             //
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              if (!_pageController.hasClients) return;
-              _pageController.animateToPage(state.weatherApiResponse.length - 1,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut);
-            });
+            if (!_isUpdating) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (!_pageController.hasClients) return;
+                _pageController.animateToPage(
+                    state.weatherApiResponse.length - 1,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut);
+              });
+            }
             //
             // Choose your fav curve
             //

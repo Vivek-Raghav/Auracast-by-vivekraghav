@@ -8,7 +8,7 @@ class GlassSearchBar extends StatelessWidget {
   const GlassSearchBar({
     super.key,
     this.onTap,
-    this.hintText = 'Search for a city',
+    this.hintText = 'Add New City',
   });
 
   @override
