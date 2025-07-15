@@ -10,6 +10,7 @@ class TextWidget extends StatelessWidget {
   final FontWeight? fontWeight;
   final Color? color;
   final TextStyle? style;
+  final TextAlign? textAlign;
 
   const TextWidget(
       {super.key,
@@ -17,7 +18,8 @@ class TextWidget extends StatelessWidget {
       this.fontSize,
       this.fontWeight,
       this.color,
-      this.style});
+      this.style,
+      this.textAlign});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class TextWidget extends StatelessWidget {
       style: style ??
           defaultStyle?.copyWith(
               fontSize: fontSize, fontWeight: fontWeight, color: color),
+      textAlign: textAlign,
     );
   }
 }

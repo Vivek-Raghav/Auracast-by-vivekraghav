@@ -11,6 +11,11 @@ class UpdateWeather extends HomeScreenEvent {
   final int index;
 }
 
+class DeleteWeather extends HomeScreenEvent {
+  DeleteWeather({required this.index});
+  final int index;
+}
+
 class ChangeCurrentWeatherIndex extends HomeScreenEvent {
   final int index;
   ChangeCurrentWeatherIndex(this.index);

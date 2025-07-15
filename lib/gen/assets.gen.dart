@@ -9,6 +9,74 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsAnimationsGen {
+  const $AssetsAnimationsGen();
+
+  /// File path: assets/animations/ash.json
+  String get ash => 'assets/animations/ash.json';
+
+  /// File path: assets/animations/clear.json
+  String get clear => 'assets/animations/clear.json';
+
+  /// File path: assets/animations/clouds.json
+  String get clouds => 'assets/animations/clouds.json';
+
+  /// File path: assets/animations/drizzle.json
+  String get drizzle => 'assets/animations/drizzle.json';
+
+  /// File path: assets/animations/dust.json
+  String get dust => 'assets/animations/dust.json';
+
+  /// File path: assets/animations/fog.json
+  String get fog => 'assets/animations/fog.json';
+
+  /// File path: assets/animations/haze.json
+  String get haze => 'assets/animations/haze.json';
+
+  /// File path: assets/animations/mist.json
+  String get mist => 'assets/animations/mist.json';
+
+  /// File path: assets/animations/rain.json
+  String get rain => 'assets/animations/rain.json';
+
+  /// File path: assets/animations/sand.json
+  String get sand => 'assets/animations/sand.json';
+
+  /// File path: assets/animations/smoke.json
+  String get smoke => 'assets/animations/smoke.json';
+
+  /// File path: assets/animations/snow.json
+  String get snow => 'assets/animations/snow.json';
+
+  /// File path: assets/animations/squall.json
+  String get squall => 'assets/animations/squall.json';
+
+  /// File path: assets/animations/thunderstorm.json
+  String get thunderstorm => 'assets/animations/thunderstorm.json';
+
+  /// File path: assets/animations/tornado.json
+  String get tornado => 'assets/animations/tornado.json';
+
+  /// List of all assets
+  List<String> get values => [
+        ash,
+        clear,
+        clouds,
+        drizzle,
+        dust,
+        fog,
+        haze,
+        mist,
+        rain,
+        sand,
+        smoke,
+        snow,
+        squall,
+        thunderstorm,
+        tornado
+      ];
+}
+
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
@@ -20,11 +88,20 @@ class $AssetsIconsGen {
   AssetGenImage get appIconPng =>
       const AssetGenImage('assets/icons/app_icon.png');
 
+  /// File path: assets/icons/city_icon.svg
+  String get cityIcon => 'assets/icons/city_icon.svg';
+
+  /// Directory path: assets/icons/forecast
+  $AssetsIconsForecastGen get forecast => const $AssetsIconsForecastGen();
+
+  /// File path: assets/icons/home_icon.svg
+  String get homeIcon => 'assets/icons/home_icon.svg';
+
   /// Directory path: assets/icons/weather
   $AssetsIconsWeatherGen get weather => const $AssetsIconsWeatherGen();
 
   /// List of all assets
-  List<AssetGenImage> get values => [appIconJpeg, appIconPng];
+  List<dynamic> get values => [appIconJpeg, appIconPng, cityIcon, homeIcon];
 }
 
 class $AssetsImagesGen {
@@ -55,9 +132,9 @@ class $AssetsWeathertypeGen {
   AssetGenImage get clear =>
       const AssetGenImage('assets/weathertype/clear.jpg');
 
-  /// File path: assets/weathertype/clouds.jpg
+  /// File path: assets/weathertype/clouds.png
   AssetGenImage get clouds =>
-      const AssetGenImage('assets/weathertype/clouds.jpg');
+      const AssetGenImage('assets/weathertype/clouds.png');
 
   /// File path: assets/weathertype/drizzle.png
   AssetGenImage get drizzle =>
@@ -122,6 +199,42 @@ class $AssetsWeathertypeGen {
         squall,
         thunderstorm,
         tornado
+      ];
+}
+
+class $AssetsIconsForecastGen {
+  const $AssetsIconsForecastGen();
+
+  /// File path: assets/icons/forecast/feels_like.svg
+  String get feelsLike => 'assets/icons/forecast/feels_like.svg';
+
+  /// File path: assets/icons/forecast/ground_level copy.svg
+  String get groundLevelCopy => 'assets/icons/forecast/ground_level copy.svg';
+
+  /// File path: assets/icons/forecast/ground_level.svg
+  String get groundLevel => 'assets/icons/forecast/ground_level.svg';
+
+  /// File path: assets/icons/forecast/humidity.svg
+  String get humidity => 'assets/icons/forecast/humidity.svg';
+
+  /// File path: assets/icons/forecast/max_temp.svg
+  String get maxTemp => 'assets/icons/forecast/max_temp.svg';
+
+  /// File path: assets/icons/forecast/min_temp.svg
+  String get minTemp => 'assets/icons/forecast/min_temp.svg';
+
+  /// File path: assets/icons/forecast/pressure.svg
+  String get pressure => 'assets/icons/forecast/pressure.svg';
+
+  /// List of all assets
+  List<String> get values => [
+        feelsLike,
+        groundLevelCopy,
+        groundLevel,
+        humidity,
+        maxTemp,
+        minTemp,
+        pressure
       ];
 }
 
@@ -209,6 +322,7 @@ class $AssetsIconsWeatherGen {
 class Assets {
   Assets._();
 
+  static const $AssetsAnimationsGen animations = $AssetsAnimationsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsWeathertypeGen weathertype = $AssetsWeathertypeGen();

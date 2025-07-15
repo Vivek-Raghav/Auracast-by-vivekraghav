@@ -13,6 +13,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   HomeScreenBloc(this.weatherApiUC) : super(HomeScreenInitial()) {
     on<FetchWeather>(_onFetchWeather);
     on<UpdateWeather>(_onUpdateWeather);
+    on<DeleteWeather>(_onDeleteWeather);
     on<ChangeCurrentWeatherIndex>(_onChangeCurrentIndex);
   }
   List<WeatherApiResponse> apiResponse = [];
@@ -52,14 +53,26 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     }
   }
 
+  Future<void> _onDeleteWeather(
+      DeleteWeather event, Emitter<HomeScreenState> emit) async {
+    try {
+      apiResponse.removeAt(event.index);
+      emit(WeatherLoaded(
+          weatherApiResponse: List.from(apiResponse),
+          currentWeatherIndex: currentWeatherIndex));
+    } catch (e) {
+      emit(WeatherError(message: e.toString()));
+    }
+  }
+
   void _onChangeCurrentIndex(
       ChangeCurrentWeatherIndex event, Emitter<HomeScreenState> emit) {
     if (state is WeatherLoaded) {
+      currentWeatherIndex = event.index;
       final currentState = state as WeatherLoaded;
       emit(WeatherLoaded(
-        weatherApiResponse: currentState.weatherApiResponse,
-        currentWeatherIndex: event.index,
-      ));
+          weatherApiResponse: currentState.weatherApiResponse,
+          currentWeatherIndex: event.index));
     }
   }
 }

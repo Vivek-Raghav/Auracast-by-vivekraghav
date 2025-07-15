@@ -30,14 +30,7 @@ class WeatherBasedBackground extends StatelessWidget {
             Container(color: Colors.black.withOpacity(0.5))
           ],
         ),
-        const Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          // Container(
-          //     height: MediaQuery.of(context).size.height * 0.35,
-          //     decoration: BoxDecoration(
-          //         image: DecorationImage(
-          //             image: Assets.images.house.provider(),
-          //             fit: BoxFit.contain)))
-        ]),
+        const Column(mainAxisAlignment: MainAxisAlignment.center, children: []),
         SizedBox(
           height: double.infinity,
           child: BackdropFilter(

@@ -11,8 +11,6 @@ class BottomNavigationBar extends StatefulWidget {
 class _BottomNavigationBarState extends State<BottomNavigationBar> {
   int _selectedIndex = 0;
 
-  final _homeBloc = getIt<HomeScreenBloc>();
-
   final List<Widget> _screens = [
     const HomePage(),
     const UserSavedCities(),
@@ -50,11 +48,13 @@ class _BottomNavigationBarState extends State<BottomNavigationBar> {
                 ),
                 onPressed: () => _onItemTapped(0),
               ),
-              SizedBox(height: _homeBloc.apiResponse.length > 1 ? 10 : 0),
-              if (_homeBloc.apiResponse.length > 1)
-                DotIndicator(
-                    length: _homeBloc.apiResponse.length,
-                    currentIndex: _homeBloc.currentWeatherIndex),
+              if (getIt<HomeScreenBloc>().apiResponse.length > 1)
+                Expanded(
+                  child: DotIndicator(
+                      length: getIt<HomeScreenBloc>().apiResponse.length,
+                      currentIndex:
+                          getIt<HomeScreenBloc>().currentWeatherIndex),
+                ),
               IconButton(
                 icon: SvgPicture.asset(
                   'assets/icons/city_icon.svg',
