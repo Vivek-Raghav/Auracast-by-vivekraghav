@@ -20,3 +20,8 @@ class ChangeCurrentWeatherIndex extends HomeScreenEvent {
   final int index;
   ChangeCurrentWeatherIndex(this.index);
 }
+
+// New events for data persistence
+class LoadSavedData extends HomeScreenEvent {}
+
+class SaveCurrentData extends HomeScreenEvent {}

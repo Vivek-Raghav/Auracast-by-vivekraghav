@@ -12,6 +12,6 @@ Future<void> injectionInit() async {
   await injectDatasources();
   await injectRepositories();
   await injectUsecases();
-  await injectBlocs();
   await initializeStorage();
+  await injectBlocs();
 }
