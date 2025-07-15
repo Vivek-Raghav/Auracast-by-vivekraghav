@@ -1,4 +1,4 @@
-library home_index.dart;
+library location_index;
 
 export 'package:flutter/material.dart';
 export "package:auracast/home/presentation/pages/home_screen.dart";
@@ -24,9 +24,7 @@ export 'package:auracast/core/shared/widgets/common_text_widgets.dart';
 
 export 'package:auracast/home/presentation/pages/weather_data_pages.dart';
 export 'package:auracast/core/shared/domain/method/methods.dart';
+
 export 'package:auracast/core/local_db/local_cache.dart';
 export 'package:auracast/core/local_db/prefs_key.dart';
 export 'package:auracast/core/shared/utils/num_extensions.dart';
-export 'package:auracast/home/presentation/pages/home_page.dart';
-export 'package:auracast/locations/user_saved_cities.dart';
-export 'package:flutter_svg/svg.dart';

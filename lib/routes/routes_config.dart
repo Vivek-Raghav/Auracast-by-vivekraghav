@@ -1,17 +1,28 @@
+import 'package:auracast/home/presentation/pages/bottom_navigation_bar.dart';
 import 'package:auracast/routes/app_routes.dart';
 import 'package:auracast/routes/routes_index.dart';
 import 'package:auracast/routes/page_transitions.dart';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: AppRoutes.home,
+  initialLocation: AppRoutes.bottomNavigation,
   routes: [
     GoRoute(
-      path: AppRoutes.home,
+      path: AppRoutes.bottomNavigation,
       pageBuilder: (context, state) => customTransitionPage(
         context: context,
         state: state,
-        child: const HomePage(),
+        child: const BottomNavigationBar(),
       ),
+      // routes: [
+      //   GoRoute(
+      //     path: AppRoutes.home,
+      //     pageBuilder: (context, state) => customTransitionPage(
+      //       context: context,
+      //       state: state,
+      //       child: const HomePage(),
+      //     ),
+      //   ),
+      // ],
     ),
     GoRoute(
       path: AppRoutes.citySearch,

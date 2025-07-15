@@ -1,7 +1,4 @@
-import 'package:auracast/core/local_db/local_cache.dart';
-import 'package:auracast/core/local_db/prefs_key.dart';
 import 'package:auracast/home/home_index.dart';
-import 'package:auracast/home/presentation/widgets/dot_indicator.dart';
 
 // BlocProvider creation with correct event dispatching
 class HomeScreen extends StatefulWidget {
@@ -13,7 +10,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<String> currentCity = [];
-  int _currentIndex = 0;
   final homeBloc = getIt<HomeScreenBloc>();
   final _pageController = PageController();
   final _localCache = getIt<LocalCache>();
@@ -23,11 +19,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     fetchWeather();
-    _pageController.addListener(() {
-      setState(() {
-        _currentIndex = _pageController.page?.round() ?? 0;
-      });
-    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   void fetchWeather() async {
@@ -50,68 +47,11 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> _searchCity() async {
-    _isUpdating = false;
-    final selectedCity = await context.push<String>(AppRoutes.citySearch);
-    if (selectedCity != null) {
-      if (currentCity.contains(selectedCity)) {
-        showToast(title: "$selectedCity is already added");
-        return;
-      } else {
-        currentCity.add(selectedCity);
-        homeBloc.add(FetchWeather(params: selectedCity));
-      }
-    }
-  }
-
-  Future<void> _updateCity(int index) async {
-    _isUpdating = true;
-    final selectedCity = await context.push<String>(AppRoutes.citySearch);
-    if (selectedCity != null) {
-      if (currentCity.contains(selectedCity)) {
-        showToast(title: "$selectedCity is already added");
-        return;
-      } else {
-        currentCity[index] = selectedCity;
-        homeBloc.add(UpdateWeather(params: selectedCity, index: index));
-      }
-    }
-    if (index == 0) {
-      _localCache.setString(
-          PrefsKey.defaultCity, selectedCity ?? currentCity[index]);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          toolbarHeight: currentCity.length > 1 ? 100 : null,
-          elevation: 0,
-          title: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: GlassSearchBar(onTap: _searchCity),
-                  ),
-                  const SizedBox(width: 12), // optional spacing
-                  GestureDetector(
-                    onTap: fetchWeather,
-                    child: const Icon(Icons.refresh,
-                        size: 34, color: ThemeColors.clrWhite),
-                  ),
-                ],
-              ),
-              SizedBox(height: currentCity.length > 1 ? 10 : 0),
-              if (currentCity.length > 1)
-                DotIndicator(
-                    length: currentCity.length, currentIndex: _currentIndex)
-            ],
-          )),
       body: BlocConsumer<HomeScreenBloc, HomeScreenState>(
         listener: (context, state) {
           if (state is WeatherLoaded) {
@@ -136,26 +76,31 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         builder: (context, state) {
           if (state is WeatherLoading) {
-            return Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: Assets.images.bgSearchCity.provider())),
-                child: const Center(
-                    child: CircularProgressIndicator(strokeWidth: 5)));
+            return currentCity.isNotEmpty
+                ? const LinearProgressIndicator()
+                : Container(
+                    height: double.infinity,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: Assets.images.bgSearchCity.provider())),
+                    child: const Center(
+                        child: CircularProgressIndicator(strokeWidth: 5)));
           } else if (state is WeatherLoaded) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (_pageController.hasClients &&
+                  _pageController.page?.round() != state.currentWeatherIndex) {
+                _pageController.jumpToPage(state.currentWeatherIndex);
+              }
+            });
             return PageView.builder(
                 controller: _pageController,
-                physics: const ClampingScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: state.weatherApiResponse.length,
                 itemBuilder: (context, index) {
                   return WeatherDataPages(
-                      weatherApiResponse: state.weatherApiResponse[index],
-                      updateCurrentCity: () {
-                        _updateCity(index);
-                      });
+                      weatherApiResponse: state.weatherApiResponse[index]);
                 });
           } else if (state is WeatherError) {
             return Center(child: Text('Error: ${state.message}'));

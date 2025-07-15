@@ -4,6 +4,33 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:auracast/core/theme/app_theme.dart';
 
+class TextWidget extends StatelessWidget {
+  final String text;
+  final double? fontSize;
+  final FontWeight? fontWeight;
+  final Color? color;
+  final TextStyle? style;
+
+  const TextWidget(
+      {super.key,
+      required this.text,
+      this.fontSize,
+      this.fontWeight,
+      this.color,
+      this.style});
+
+  @override
+  Widget build(BuildContext context) {
+    TextStyle? defaultStyle = Theme.of(context).textTheme.bodyMedium;
+    return Text(
+      text,
+      style: style ??
+          defaultStyle?.copyWith(
+              fontSize: fontSize, fontWeight: fontWeight, color: color),
+    );
+  }
+}
+
 class TitleMediumTextWidget extends StatelessWidget {
   final String text;
   final double? fontSize;

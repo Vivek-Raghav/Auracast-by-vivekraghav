@@ -13,8 +13,11 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   HomeScreenBloc(this.weatherApiUC) : super(HomeScreenInitial()) {
     on<FetchWeather>(_onFetchWeather);
     on<UpdateWeather>(_onUpdateWeather);
+    on<ChangeCurrentWeatherIndex>(_onChangeCurrentIndex);
   }
   List<WeatherApiResponse> apiResponse = [];
+  int currentWeatherIndex = 0;
+
   Future<void> _onFetchWeather(
       FetchWeather event, Emitter<HomeScreenState> emit) async {
     emit(WeatherLoading());
@@ -23,7 +26,9 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       result.fold((failure) => emit(WeatherError(message: failure.toString())),
           (data) {
         apiResponse.add(data);
-        emit(WeatherLoaded(weatherApiResponse: List.from(apiResponse)));
+        emit(WeatherLoaded(
+            weatherApiResponse: List.from(apiResponse),
+            currentWeatherIndex: currentWeatherIndex));
       });
     } catch (e) {
       emit(WeatherError(message: e.toString()));
@@ -38,10 +43,23 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       result.fold((failure) => emit(WeatherError(message: failure.toString())),
           (data) {
         apiResponse[event.index] = data;
-        emit(WeatherLoaded(weatherApiResponse: List.from(apiResponse)));
+        emit(WeatherLoaded(
+            weatherApiResponse: List.from(apiResponse),
+            currentWeatherIndex: event.index));
       });
     } catch (e) {
       emit(WeatherError(message: e.toString()));
+    }
+  }
+
+  void _onChangeCurrentIndex(
+      ChangeCurrentWeatherIndex event, Emitter<HomeScreenState> emit) {
+    if (state is WeatherLoaded) {
+      final currentState = state as WeatherLoaded;
+      emit(WeatherLoaded(
+        weatherApiResponse: currentState.weatherApiResponse,
+        currentWeatherIndex: event.index,
+      ));
     }
   }
 }

@@ -1,15 +1,15 @@
 import 'package:auracast/home/home_index.dart';
+import 'package:lottie/lottie.dart';
 
 class WeatherDisplayWidget extends StatelessWidget {
   final WeatherApiResponse? weatherApiResponse;
   final WeatherType? weatherType;
-  final VoidCallback updateCurrentCity;
 
-  const WeatherDisplayWidget(
-      {super.key,
-      required this.weatherApiResponse,
-      required this.weatherType,
-      required this.updateCurrentCity});
+  const WeatherDisplayWidget({
+    super.key,
+    required this.weatherApiResponse,
+    required this.weatherType,
+  });
 
   double temperatureConverter(double kelvin) {
     return kelvin - 273.15;
@@ -22,6 +22,36 @@ class WeatherDisplayWidget extends StatelessWidget {
     if (weatherApiResponse == null) {
       return const Center(child: CircularProgressIndicator());
     }
+
+    final List<Map<String, String>> weatherDetails = [
+      {
+        "title": "Feels like",
+        "subtitle":
+            "${temperatureConverter(weatherApiResponse!.main!.feelsLike!).toStringAsFixed(0)}°"
+      },
+      {
+        "title": "Humidity",
+        "subtitle": weatherApiResponse!.main!.humidity!.toStringAsFixed(0)
+      },
+      {
+        "title": "Min Temp.",
+        "subtitle":
+            "${temperatureConverter(weatherApiResponse!.main!.tempMin!).toStringAsFixed(0)}°"
+      },
+      {
+        "title": "Max Temp.",
+        "subtitle":
+            "${temperatureConverter(weatherApiResponse!.main!.tempMax!).toStringAsFixed(0)}°"
+      },
+      {
+        "title": "Pressure",
+        "subtitle": weatherApiResponse!.main!.pressure!.toString()
+      },
+      {
+        "title": "Ground Level",
+        "subtitle": weatherApiResponse!.main!.grndLevel!.toString()
+      },
+    ];
 
     return SafeArea(
       child: Padding(
@@ -63,84 +93,42 @@ class WeatherDisplayWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      GestureDetector(
-                        onTap: updateCurrentCity,
-                        child: Container(
-                          decoration: const BoxDecoration(),
-                          child: Icon(Icons.edit_location_alt_outlined,
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                              size: 30),
-                        ),
-                      ),
+                      // GestureDetector(
+                      //   onTap: updateCurrentCity,
+                      //   child: Container(
+                      //     decoration: const BoxDecoration(),
+                      //     child: Icon(Icons.edit_location_alt_outlined,
+                      //         color: Theme.of(context).scaffoldBackgroundColor,
+                      //         size: 30),
+                      //   ),
+                      // ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.15,
-                          child:
-                              getWeatherIcon(weatherType ?? WeatherType.clear)
-                                  .image())
+                          child: Lottie.asset(
+                              'assets/animations/${weatherType?.name.toLowerCase() ?? WeatherType.clear.name}.json'))
                     ]),
               ],
             ),
             SizedBox(height: size.height * 0.05),
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: GlassDetailsContainer(
-                            title: "Feels like",
-                            subtitle:
-                                "${temperatureConverter(weatherApiResponse!.main!.feelsLike!).toStringAsFixed(0)}°"),
-                      ),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: GlassDetailsContainer(
-                            title: "Humidity",
-                            subtitle:
-                                "${weatherApiResponse!.main!.humidity!.toStringAsFixed(0)}%"),
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: GlassDetailsContainer(
-                            title: "Min Temp.",
-                            subtitle:
-                                "${temperatureConverter(weatherApiResponse!.main!.tempMin!).toStringAsFixed(0)}°"),
-                      ),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: GlassDetailsContainer(
-                            title: "Max Temp.",
-                            subtitle:
-                                "${temperatureConverter(weatherApiResponse!.main!.tempMax!).toStringAsFixed(0)}°"),
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: GlassDetailsContainer(
-                            title: "Pressure",
-                            subtitle:
-                                weatherApiResponse!.main!.pressure!.toString()),
-                      ),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: GlassDetailsContainer(
-                            title: "Ground Level",
-                            subtitle: weatherApiResponse!.main!.grndLevel!
-                                .toString()),
-                      )
-                    ],
-                  ),
-                ],
+            Expanded(
+              child: ListView.builder(
+                itemCount: weatherDetails.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: GlassDetailsContainer(
+                            title: weatherDetails[index]['title'] ?? "",
+                            subtitle: weatherDetails[index]['subtitle']!,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
             )
           ],
@@ -173,7 +161,8 @@ class GlassDetailsContainer extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           HeadlineSmallTextWidget(
             text: title,

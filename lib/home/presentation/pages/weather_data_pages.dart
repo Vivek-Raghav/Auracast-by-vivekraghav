@@ -4,10 +4,8 @@ class WeatherDataPages extends StatelessWidget {
   const WeatherDataPages({
     required this.weatherApiResponse,
     super.key,
-    required this.updateCurrentCity,
   });
   final WeatherApiResponse weatherApiResponse;
-  final VoidCallback updateCurrentCity;
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +13,7 @@ class WeatherDataPages extends StatelessWidget {
     return Stack(children: [
       WeatherBasedBackground(weatherType: weatherType),
       WeatherDisplayWidget(
-        weatherApiResponse: weatherApiResponse,
-        weatherType: weatherType,
-        updateCurrentCity: updateCurrentCity,
-      ),
+          weatherApiResponse: weatherApiResponse, weatherType: weatherType),
     ]);
   }
 }

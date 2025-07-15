@@ -10,3 +10,8 @@ class UpdateWeather extends HomeScreenEvent {
   final String params;
   final int index;
 }
+
+class ChangeCurrentWeatherIndex extends HomeScreenEvent {
+  final int index;
+  ChangeCurrentWeatherIndex(this.index);
+}

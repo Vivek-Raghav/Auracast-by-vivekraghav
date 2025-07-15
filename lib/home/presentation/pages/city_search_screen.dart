@@ -15,7 +15,6 @@ class _CitySearchScreenState extends State<CitySearchScreen> {
   final TextEditingController _searchController = TextEditingController();
   List<String> filteredCities = [];
 
-  // List of major Indian cities
   final List<String> indianCities = [
     'Mumbai',
     'Delhi',
@@ -71,18 +70,14 @@ class _CitySearchScreenState extends State<CitySearchScreen> {
       body: Stack(
         children: [
           SizedBox(
-            height: double.infinity,
-            width: double.infinity,
-            child: Assets.images.bgSearchCity.image(fit: BoxFit.cover),
-          ),
+              height: double.infinity,
+              width: double.infinity,
+              child: Assets.images.homeBackground.image(fit: BoxFit.cover)),
           Positioned.fill(
             child: ClipRRect(
-              // match your rounded‐corner aesthetic if you like
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-                child: Container(
-                  color: Colors.white.withOpacity(0.22),
-                ),
+                child: Container(color: Colors.white.withOpacity(0.01)),
               ),
             ),
           ),
