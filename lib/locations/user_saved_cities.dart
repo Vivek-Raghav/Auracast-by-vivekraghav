@@ -157,6 +157,9 @@ class _UserSavedCitiesState extends State<UserSavedCities> {
                                                 selectedCities.removeAt(index);
                                                 homeBloc.add(DeleteWeather(
                                                     index: index));
+                                                homeBloc.add(
+                                                    ChangeCurrentWeatherIndex(
+                                                        0));
                                               },
                                         icon: const Icon(
                                           size: 20,
