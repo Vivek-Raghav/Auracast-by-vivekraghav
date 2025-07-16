@@ -30,29 +30,21 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       LoadSavedData event, Emitter<HomeScreenState> emit) async {
     emit(WeatherLoading());
     try {
-      // Load saved cities
       savedCities = await _weatherDataService.loadSavedCities();
-
-      // If no saved cities, add default city
       if (savedCities.isEmpty) {
         final defaultCity = await _weatherDataService.loadDefaultCity();
         savedCities.add(defaultCity);
         await _weatherDataService.saveSavedCities(savedCities);
       }
-
-      // Check if cached weather data is valid
       final isDataValid = await _weatherDataService.isCachedDataValid();
-
       if (isDataValid) {
-        // Load cached weather data
         apiResponse = await _weatherDataService.loadWeatherData();
         emit(WeatherLoaded(
           weatherApiResponse: List.from(apiResponse),
           currentWeatherIndex: currentWeatherIndex,
         ));
       } else {
-        // Fetch fresh data for all saved cities
-        // await _fetchAllSavedCities(emit);
+        add(FetchWeather(params: "Delhi"));
       }
     } catch (e) {
       emit(WeatherError(message: e.toString()));

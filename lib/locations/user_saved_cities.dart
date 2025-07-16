@@ -102,7 +102,12 @@ class _UserSavedCitiesState extends State<UserSavedCities> {
               bloc: homeBloc,
               listener: (context, state) {},
               builder: (builder, state) {
-                if (state is WeatherLoaded) {
+                if (state is WeatherLoading) {
+                  return const Expanded(
+                      child: Center(
+                          child: CircularProgressIndicator(
+                              color: ThemeColors.clrWhite)));
+                } else if (state is WeatherLoaded) {
                   return Expanded(
                       child: ListView.builder(
                           itemCount: state.weatherApiResponse.length,
@@ -123,6 +128,8 @@ class _UserSavedCitiesState extends State<UserSavedCities> {
                                   low: temperatureConverter(
                                       weather.main!.tempMin!),
                                   onTap: () => _changeCityToHomePage(index),
+                                  isSelected:
+                                      state.currentWeatherIndex == index,
                                 ),
                                 Positioned(
                                     right: 40,

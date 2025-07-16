@@ -9,6 +9,7 @@ class GlassCard extends StatelessWidget {
   final String high;
   final String low;
   final VoidCallback onTap;
+  final bool isSelected;
 
   const GlassCard({
     super.key,
@@ -19,6 +20,7 @@ class GlassCard extends StatelessWidget {
     required this.high,
     required this.low,
     required this.onTap,
+    required this.isSelected,
   });
 
   @override
@@ -37,7 +39,8 @@ class GlassCard extends StatelessWidget {
               color: Colors.white.withOpacity(0.1),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: Colors.white.withOpacity(0.2),
+                color:
+                    isSelected ? Colors.white : Colors.white.withOpacity(0.2),
               ),
             ),
             child: Row(
