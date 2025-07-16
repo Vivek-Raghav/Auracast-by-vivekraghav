@@ -11,23 +11,29 @@ class UserSavedCities extends StatefulWidget {
 class _UserSavedCitiesState extends State<UserSavedCities> {
   final homeBloc = getIt<HomeScreenBloc>();
   final _localCache = getIt<LocalCache>();
-  List<String> currentCity = [];
+  List<String> selectedCities = [];
 
   @override
   void initState() {
     super.initState();
-    _addDefaultCity();
+    _addSavedCities();
   }
 
   Future<void> _searchCity() async {
     final selectedCity = await context.push<String>(AppRoutes.citySearch);
 
     if (selectedCity != null) {
-      if (currentCity.contains(selectedCity)) {
+      if (selectedCities.contains(selectedCity)) {
         showToast(title: "$selectedCity is already added");
         return;
+      } else if (selectedCities.length > 4) {
+        showToast(
+          title: "You can't add more than 5 cities",
+          duration: const Duration(seconds: 2),
+        );
+        return;
       } else {
-        currentCity.add(selectedCity);
+        selectedCities.add(selectedCity);
         homeBloc.add(FetchWeather(params: selectedCity));
       }
     }
@@ -36,24 +42,24 @@ class _UserSavedCitiesState extends State<UserSavedCities> {
   Future<void> _updateCity(int index) async {
     final selectedCity = await context.push<String>(AppRoutes.citySearch);
     if (selectedCity != null) {
-      if (currentCity.contains(selectedCity)) {
+      if (selectedCities.contains(selectedCity)) {
         showToast(title: "$selectedCity is already added");
         return;
       } else {
-        currentCity[index] = selectedCity;
+        selectedCities[index] = selectedCity;
         homeBloc.add(UpdateWeather(params: selectedCity, index: index));
       }
     }
     if (index == 0) {
       _localCache.setString(
-          PrefsKey.defaultCity, selectedCity ?? currentCity[index]);
+          PrefsKey.defaultCity, selectedCity ?? selectedCities[index]);
     }
   }
 
-  void _addDefaultCity() async {
-    final citName =
-        await _localCache.getString(PrefsKey.defaultCity) ?? "Delhi";
-    currentCity.add(citName);
+  void _addSavedCities() async {
+    for (var city in homeBloc.savedCities) {
+      selectedCities.add(city);
+    }
   }
 
   void _changeCityToHomePage(int index) {
@@ -141,7 +147,7 @@ class _UserSavedCitiesState extends State<UserSavedCities> {
                                                         "Error : Default city cannot be deleted");
                                               }
                                             : () {
-                                                currentCity.removeAt(index);
+                                                selectedCities.removeAt(index);
                                                 homeBloc.add(DeleteWeather(
                                                     index: index));
                                               },

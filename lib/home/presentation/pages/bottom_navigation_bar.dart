@@ -23,6 +23,14 @@ class _BottomNavigationBarState extends State<BottomNavigationBar> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    if (getIt<HomeScreenBloc>().apiResponse.isEmpty) {
+      getIt<HomeScreenBloc>().add(LoadSavedData());
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
